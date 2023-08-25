@@ -1,7 +1,7 @@
 def chess_transformer(coords):
     alpha_coords = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     return int(coords[1]), alpha_coords.index(coords[0]) + 1
-
+print('Необходимо задать местоположение в формате a6, f8, b1...')
 n = input()
 row, col = chess_transformer(n)
 

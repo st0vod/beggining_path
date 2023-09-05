@@ -16,13 +16,11 @@ def add_photo_format(old_list):
         else:
             old_list.append(new_format)
             print(Fore.BLACK + Back.WHITE + f'Программа проверяет фотографии следующих форматов: {old_list}'.ljust(50))
-            ptint()
+            print()
             print(Fore.BLACK + Back.WHITE + 'Хотите добавить ещё новый формат? Введите yes или no'.ljust(50))
     return old_list
     
-def name_photo():                                                               # Пользователь указывает имя фото включая формат, которое необходимо проверить на методанные     
-    list_of_format = [".jpg", ".jpeg", ".bmp", ".HEIC"]    
-    list_of_format = add_photo_format(list_of_format)        
+def name_photo():                                                               # Пользователь указывает имя фото включая формат, которое необходимо проверить на методанные           
     print(Fore.BLACK + Back.WHITE + 'Введите название имя.формат, пример: IMG_1241.jpeg'.ljust(50))
     while True:
         el = input()
@@ -160,6 +158,9 @@ def check_answer_yes_no():
 #------------------------main------------------------
 init(autoreset=True)
 intro()
+list_of_format = [".jpg", ".jpeg", ".bmp", ".HEIC"]    
+list_of_format = add_photo_format(list_of_format) 
+
 while True:
     flag = True
     while flag:
@@ -176,7 +177,7 @@ while True:
         find_datetime(photo_image)
         gps_coord(photo_image)
         degrees_info(photo_image)
-    print(Fore.BLACK + Back.WHITE + 'Проверить ещё фотографию?'.ljust(50))
+    print(Fore.BLACK + Back.WHITE + 'Проверить ещё фотографию? Напишите yes или no'.ljust(50))
     if not check_answer_yes_no():
         print(Fore.RED + Back.WHITE + 'ПРОГРАММА ЗАВЕРШЕНА'.ljust(50))
         value = input()

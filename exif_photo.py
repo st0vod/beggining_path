@@ -2,9 +2,28 @@ from exif import Image
 from colorama import init, Fore, Back, Style
 import webbrowser
 
-def name_photo():                                                               # Пользователь указывает имя фото включая формат, которое необходимо проверить на методанные
-    print(Fore.BLACK + Back.WHITE + 'Введите название имя.формат:'.ljust(50))
-    list_of_format = ".jpg", ".jpeg", ".bmp"
+def add_photo_format(old_list):
+    print(Fore.BLACK + Back.WHITE + f'Программа проверяет фотографии следующих форматов: {old_list}'.ljust(50))
+    print()
+    print(Fore.BLACK + Back.WHITE + 'Хотите добавить ещё новый формат? Введите yes или no'.ljust(50))
+    while check_answer_yes_no():
+        print(Fore.BLACK + Back.WHITE + 'Введите новый формат, пример - .jpeg'.ljust(50))
+        new_format = input()
+        if new_format[0] != '.':
+            print(Fore.RED + Back.YELLOW + 'Формат должен начинаться с точки'.ljust(50))
+            print()
+            print(Fore.BLACK + Back.WHITE + 'Хотите ввести заново формат фотографии? Напишите yes или no'.ljust(50))
+        else:
+            old_list.append(new_format)
+            print(Fore.BLACK + Back.WHITE + f'Программа проверяет фотографии следующих форматов: {old_list}'.ljust(50))
+            ptint()
+            print(Fore.BLACK + Back.WHITE + 'Хотите добавить ещё новый формат? Введите yes или no'.ljust(50))
+    return old_list
+    
+def name_photo():                                                               # Пользователь указывает имя фото включая формат, которое необходимо проверить на методанные     
+    list_of_format = [".jpg", ".jpeg", ".bmp", ".HEIC"]    
+    list_of_format = add_photo_format(list_of_format)        
+    print(Fore.BLACK + Back.WHITE + 'Введите название имя.формат, пример: IMG_1241.jpeg'.ljust(50))
     while True:
         el = input()
         for i in list_of_format:
@@ -14,7 +33,7 @@ def name_photo():                                                               
 
 def check_exif_data(photo):                                                     # Проверяем наличие методанных в фото
     if photo.has_exif:
-        print(Fore.BLACK + Back.WHITE + f"Фото имеет EXIF методанные(version {photo.exif_version}).".ljust(50))
+        print(Fore.BLACK + Back.WHITE + f"Фото имеет EXIF методанные(version {photo.get('exif_version', 'нет данных')}).".ljust(50))
         return True
     else:
         print(Fore.BLACK + Back.WHITE + "Фото не имеет EXIF методанные.".ljust(50))
@@ -28,8 +47,8 @@ def check_objects_in_photo(photo):                                              
         print(' '*10, el)
 
 def device_information(photo):
-    make_photo = photo.make
-    model_photo = photo.model    
+    make_photo = photo.get('make', 'нет данных')
+    model_photo = photo.get('model', 'нет данных')    
     print(Fore.BLACK + Back.WHITE + f"Информация об устройстве".ljust(50))
     print(Fore.BLACK + Back.YELLOW + f"Производитель: {make_photo}".ljust(50))
     print(Fore.BLACK + Back.YELLOW + f"Модель: {model_photo}".ljust(50))  
@@ -37,7 +56,7 @@ def device_information(photo):
     
 def find_datetime(photo):
     print(Fore.BLACK + Back.WHITE + f"Дата/время".ljust(50))
-    print(Fore.BLACK + Back.YELLOW + f"{photo.datetime_original}.{photo.subsec_time_original} {photo.get('offset_time', '')}".ljust(50))
+    print(Fore.BLACK + Back.YELLOW + f"{photo.get('datetime_original', 'нет данных')}.{photo.get('subsec_time_original', 'нет данных')} {photo.get('offset_time', '')}".ljust(50))
     print("-------------------------")
     
 def format_dms_coordinates(coordinates):

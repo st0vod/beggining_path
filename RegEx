@@ -1,0 +1,5 @@
+import re
+print(len(re.split(r'\W+', re.sub(r'\b-\b', r'', r'Он --- серо-буро-малиновая редиска!! >>>:-> А не кот. www.kot.ru'))))
+
+
+#RegularExpressions training
